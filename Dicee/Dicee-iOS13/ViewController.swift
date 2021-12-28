@@ -22,6 +22,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         diceImage1.image = #imageLiteral(resourceName: "DiceSix")
         diceImage2.image = #imageLiteral(resourceName: "DiceTwo")
+        self.becomeFirstResponder()
     }
     
     @IBAction func rollButtonPressed(_ sender: UIButton) {
@@ -30,7 +31,21 @@ class ViewController: UIViewController {
         diceImage1.image = imageArray[Int.random(in: 0...5)]
         diceImage2.image = [#imageLiteral(resourceName: "DiceOne"),#imageLiteral(resourceName: "DiceTwo"),#imageLiteral(resourceName: "DiceThree"),#imageLiteral(resourceName: "DiceFour"),#imageLiteral(resourceName: "DiceFive"),#imageLiteral(resourceName: "DiceSix")].randomElement()
     }
-
+    
+    override var canBecomeFirstResponder: Bool {
+        get {
+            return true
+        }
+    }
+    
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            print("Phone has been shaked.")
+            // Same thing happens both 31 and 32
+            diceImage1.image = imageArray[Int.random(in: 0...5)]
+            diceImage2.image = [#imageLiteral(resourceName: "DiceOne"),#imageLiteral(resourceName: "DiceTwo"),#imageLiteral(resourceName: "DiceThree"),#imageLiteral(resourceName: "DiceFour"),#imageLiteral(resourceName: "DiceFive"),#imageLiteral(resourceName: "DiceSix")].randomElement()
+        }
+    }
 
 }
 
