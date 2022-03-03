@@ -16,7 +16,18 @@ class ViewController: UIViewController {
     @IBAction func keyPressed(_ sender: UIButton) {
         // Or we can use sender.titleLabel!.text!
         print(sender.currentTitle!)
-        playSound(buttonTitle: sender.currentTitle!);
+        
+        print("Start")
+        
+        playSound(soundName: sender.currentTitle!);
+        // Set the opacity half of the original
+        sender.alpha = 0.5
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+              // Bring's sender's opacity back up to fully opaque.
+              sender.alpha = 1.0
+          }
+        
+        print("End")
     }
     
     
@@ -24,7 +35,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
 
-    func playSound(buttonTitle name: String) {
+    func playSound(soundName name: String) {
             let url = Bundle.main.url(forResource: name, withExtension: "wav")
             player = try! AVAudioPlayer(contentsOf: url!)
             player.play()
